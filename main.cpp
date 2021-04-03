@@ -12,15 +12,14 @@ int main(int argc, char** argv) {
 	struct addrinfo* result = NULL,
 		* ptr = NULL,
 		hints;
-	const char* sendbuf = "this is a test";
 	char recvbuf[DEFAULT_BUFLEN];
 	int iResult;
 	int recvbuflen = DEFAULT_BUFLEN;
 
-	const char buff_handshake_p1[] = {
+	const unsigned char buff_handshake_p1[] = {
 		0x00, 0x00, 0x00, 0x00
 	};
-	const char buff_handshake_p2[] = {
+	const unsigned char buff_handshake_p2[] = {
 		0x00, 0x00, 0x00, 0x2f, 0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0xff, 0x8b, 0x2e, 0x4b, 0x2d, 0x2a, 0xce,
 		0xcc, 0xcf, 0x8b, 0xe5, 0xe2, 0x84, 0xb2, 0x6c, 0x95, 0x0c,
@@ -28,7 +27,7 @@ int main(int argc, char** argv) {
 		0x92, 0x5c, 0x00, 0xc0, 0x38, 0xd3, 0xd7, 0x28, 0x00, 0x00,
 		0x00
 	};
-	const char buff_send_name[] = {
+	const unsigned char buff_send_name[] = {
 		0x00, 0x00, 0x00, 0x3a, 0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0xff, 0x8b, 0xce, 0xc9, 0x4f, 0xcf, 0xcc,
 		0x8b, 0xe5, 0xe2, 0x2c, 0x2d, 0x4e, 0x2d, 0xca, 0x4b, 0xcc,
@@ -81,19 +80,19 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	iResult = send(ConnectSocket, buff_handshake_p1, (int)sizeof(buff_handshake_p1), 0);
+	iResult = send(ConnectSocket, (const char*)buff_handshake_p1, (int)sizeof(buff_handshake_p1), 0);
 	printf("Bytes Sent: %ld\n", iResult);
 
 	iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
 	printf("Bytes received: %d\n", iResult);
 
-	iResult = send(ConnectSocket, buff_handshake_p2, (int)sizeof(buff_handshake_p2), 0);
+	iResult = send(ConnectSocket, (const char*)buff_handshake_p2, (int)sizeof(buff_handshake_p2), 0);
 	printf("Bytes Sent: %ld\n", iResult);
 
 	iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
 	printf("Bytes received: %d\n", iResult);
 
-	iResult = send(ConnectSocket, buff_send_name, (int)sizeof(buff_send_name), 0);
+	iResult = send(ConnectSocket, (const char*)buff_send_name, (int)sizeof(buff_send_name), 0);
 	printf("Bytes Sent: %ld\n", iResult);
 
 	do {
