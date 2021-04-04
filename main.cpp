@@ -1,3 +1,11 @@
+/*
+	An example client that will connect to a local Wesnoth server with the username "FFFAAAKKKEEE". 
+	
+	The majority of the code is based off the Winsock example provided by Microsoft: https://docs.microsoft.com/en-us/windows/win32/winsock/complete-client-code
+	
+	The packet data and the approach to discover it are discussed in the article at: https://gamehacking.academy/lesson/31
+*/
+
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <stdio.h>
@@ -16,9 +24,12 @@ int main(int argc, char** argv) {
 	int iResult;
 	int recvbuflen = DEFAULT_BUFLEN;
 
+	// The handshake initiation request
 	const unsigned char buff_handshake_p1[] = {
 		0x00, 0x00, 0x00, 0x00
 	};
+	
+	// Contains the version 1.14.9
 	const unsigned char buff_handshake_p2[] = {
 		0x00, 0x00, 0x00, 0x2f, 0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0xff, 0x8b, 0x2e, 0x4b, 0x2d, 0x2a, 0xce,
@@ -27,6 +38,8 @@ int main(int argc, char** argv) {
 		0x92, 0x5c, 0x00, 0xc0, 0x38, 0xd3, 0xd7, 0x28, 0x00, 0x00,
 		0x00
 	};
+	
+	// Contains the username FFFAAAKKKEEE
 	const unsigned char buff_send_name[] = {
 		0x00, 0x00, 0x00, 0x3a, 0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0xff, 0x8b, 0xce, 0xc9, 0x4f, 0xcf, 0xcc,
